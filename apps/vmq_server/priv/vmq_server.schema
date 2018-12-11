@@ -1429,6 +1429,12 @@
                                                                        hidden
                                                                       ]}.
 
+{mapping, "plumtree.drop_i_have_threshold", "plumtree.drop_i_have_threshold", [
+                                                                               {default, 0},
+                                                                               {datatype, integer},
+                                                                               hidden
+                                                                              ]}.
+
 %% the setup utility will call hooks to create the default directories,
 %% however the setup defaults e.g. data.<nodename> are not matching with our 
 %% defaults, so we need to override them.
