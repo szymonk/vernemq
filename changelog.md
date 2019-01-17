@@ -51,6 +51,32 @@
 - Log (debug level) when a LWT is suppressed on session takeover.
 - Optimize subscribe operation by refactoring away one read from the metadata
   store.
+- Add protection mechanism for the plumtree metadata store from subscription
+  floods by dropping and not acknowledging `i_have` messages when the mailbox
+  size grows above a certain threshold. This threshold is configurable via the
+  `plumtree.drop_i_have_threshold` hidden option. The default is 1000000. This
+  work was kindly contributed by ADB (https://www.adbglobal.com).
+- Add new `vmq-admin retain` commands to inspect the retained message store.
+- Support for different MySQL password hashing methods in `vmq_diversity`,
+  ensuring compatibility with MySQL 8.0.11+. The method is configurable via the
+  `vmq_diversity.mysql.password_hash_method` option which allows:
+  `password` (default for compatibility), `md5`, `sha1` or `sha256`.
+- Fix the HTTP `/status.json` endpoint to have a valid JSON output (#786).
+- Fix bug where internal application plugins where shown as normal plugins.
+- Fix crash in bridge when calling `vmq-admin session show` by fixing the
+  `vmq_ql` row initializer to handle plugin sessions (the bridge starts a local
+  plugin session).
+- Add improvements to VerneMQ status page to have nicer UI and be readable on smaller devices.
+- Upgraded dependency `sext` to 1.5.0 (required for better OSX compilation).
+- Do not accept new client connections while the broker is shutting down as this
+  could cause errors to be reported in the log (#1004).
+- Fix `vmq_diversity` PostgreSQL reconnect issue (#1008).
+- Fix `vmq_webhooks` so peer port is not considered when caching the
+  `auth_on_register` to avoid cache misses.
+- Multiple bug fixes and improvements in `vmq_swc`.
+- Add the `vmq_swc` metadata plugin (using the already existing LevelDB backend) to
+  the default VerneMQ release. To use `vmq_swc` instead of `vmq_plumtree` set
+  `metadata_plugin = vmq_swc` in `vernemq.conf`. `vmq_swc` is still in Beta.
 
 ## VerneMQ 1.6.0
 
